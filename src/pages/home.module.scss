@@ -1,1 +1,55 @@
-// TODO
+.mainContainer {
+  margin: auto;
+  width: 1120px;
+  padding: 1.25rem 13.125rem;
+}
+
+.cardItem {
+  display: block;
+
+  strong {
+    color: var(--heading);
+    font-size: 1.75rem;
+  }
+
+  p {
+    margin-top: 8px;
+    color: var(--body);
+    font-size: 1.125rem;
+  }
+
+  & + & {
+    margin-top: 3rem;
+  }
+}
+
+.cardInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  color: var(--info);
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+
+  svg {
+    stroke: var(--info);
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  span {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+.loadMoreButton {
+  color: var(--highlight);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 4rem;
+  background: none;
+  border: none;
+}
