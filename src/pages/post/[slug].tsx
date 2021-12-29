@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 
 import { getPrismicClient } from '../../services/prismic';
 import styles from './post.module.scss';
+import Comments from '../../components/Comments';
 
 interface Post {
   uid: string;
@@ -114,6 +115,7 @@ export default function Post({ post }: PostProps): JSX.Element {
             ))}
           </div>
         </article>
+        <Comments />
       </main>
     </>
   );
