@@ -1,0 +1,41 @@
+.navigationContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  border-top: 1px solid rgba(215, 215, 215, 0.1);
+
+  padding: 3rem 0;
+}
+
+.previousPost {
+  cursor: pointer;
+  grid-area: 1 / 1 / 2 / 2;
+
+  div {
+    font-size: 1.125rem;
+    color: var(--heading);
+  }
+
+  span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--highlight);
+  }
+}
+
+.nextPost {
+  cursor: pointer;
+  grid-area: 1 / 2 / 2 / 3;
+  text-align: right;
+
+  div {
+    font-size: 1.125rem;
+    color: var(--heading);
+  }
+
+  span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--highlight);
+  }
+}

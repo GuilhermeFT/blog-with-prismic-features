@@ -26,7 +26,7 @@
 
   color: var(--info);
   font-size: 0.875rem;
-  margin: 1.5rem 0 4rem;
+  margin: 1.5rem 0 1rem;
 
   div {
     display: flex;
@@ -41,9 +41,15 @@
   }
 }
 
+.articleEdited {
+  color: var(--info);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
 .articleContent {
   word-break: break-word;
-  
+
   h2 {
     font-size: 2.25rem;
     color: var(--heading);
@@ -72,6 +78,10 @@
   a {
     text-decoration: underline;
   }
+}
+
+.articleFooter {
+  margin: 3.75rem 0;
 }
 
 @media (max-width: 720px) {
