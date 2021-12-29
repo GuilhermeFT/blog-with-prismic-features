@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FiCalendar, FiUser } from 'react-icons/fi';
 import Header from '../components/Header';
+import PreviewButton from '../components/PreviewButton';
 
 import { getPrismicClient } from '../services/prismic';
 
@@ -31,9 +32,13 @@ interface PostPagination {
 
 interface HomeProps {
   postsPagination: PostPagination;
+  preview: boolean;
 }
 
-export default function Home({ postsPagination }: HomeProps): JSX.Element {
+export default function Home({
+  postsPagination,
+  preview,
+}: HomeProps): JSX.Element {
   const router = useRouter();
 
   const [nextPage, setNextPage] = useState(postsPagination.next_page);
@@ -97,18 +102,22 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
             </button>
           )}
         </div>
+
+        {preview && <PreviewButton />}
       </main>
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async context => {
   const prismic = getPrismicClient();
+  const { preview = false, previewData } = context;
 
   const postsResponse = await prismic.query('', {
     fetch: ['posts.title', 'posts.subtitle', 'posts.uid', 'posts.author'],
     page: 1,
     pageSize: 2,
+    ref: previewData?.ref ?? null,
   });
 
   const postsPagination: PostPagination = {
@@ -126,5 +135,5 @@ export const getStaticProps: GetStaticProps = async () => {
     }),
   };
 
-  return { props: { postsPagination } };
+  return { props: { postsPagination, preview } };
 };

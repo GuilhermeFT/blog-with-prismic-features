@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import styles from './styles.module.scss';
+
 export default function Comments(): JSX.Element {
   useEffect(() => {
     const script = document.createElement('script');
@@ -7,11 +9,11 @@ export default function Comments(): JSX.Element {
     script.setAttribute('src', 'https://utteranc.es/client.js');
     script.setAttribute('crossorigin', 'anonymous');
     script.setAttribute('async', '');
-    script.setAttribute('repo', 'GuilhermeFT/blog-with-prismic');
-    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('repo', 'GuilhermeFT/blog-with-prismic-features');
+    script.setAttribute('issue-term', 'title');
     script.setAttribute('theme', 'dark-blue');
     anchor.appendChild(script);
   }, []);
 
-  return <div id="comments-uterances" />;
+  return <div id="comments-uterances" className={styles.commentsContainer} />;
 }

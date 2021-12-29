@@ -42,6 +42,8 @@
 }
 
 .articleContent {
+  word-break: break-word;
+  
   h2 {
     font-size: 2.25rem;
     color: var(--heading);

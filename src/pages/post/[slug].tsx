@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image, { ImageLoaderProps } from 'next/image';
+
 import { ptBR } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
@@ -12,6 +13,7 @@ import Header from '../../components/Header';
 import { getPrismicClient } from '../../services/prismic';
 import styles from './post.module.scss';
 import Comments from '../../components/Comments';
+import PreviewButton from '../../components/PreviewButton';
 
 interface Post {
   uid: string;
@@ -20,7 +22,7 @@ interface Post {
     title: string;
     subtitle: string;
     banner: {
-      url: string;
+      url?: string;
     };
     author: string;
     content: {
@@ -34,9 +36,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post, preview }: PostProps): JSX.Element {
   const router = useRouter();
 
   const readTime = Math.ceil(
@@ -69,14 +72,16 @@ export default function Post({ post }: PostProps): JSX.Element {
 
       <Header />
       <main>
-        <section className={styles.postImageContainer}>
-          <Image
-            loader={myLoader}
-            src={post.data.banner.url}
-            layout="fill"
-            objectFit="cover"
-          />
-        </section>
+        {post.data.banner.url && (
+          <section className={styles.postImageContainer}>
+            <Image
+              loader={myLoader}
+              src={post.data.banner.url}
+              layout="fill"
+              objectFit="cover"
+            />
+          </section>
+        )}
 
         <article className={styles.articleContainer}>
           <header className={styles.articleHeader}>
@@ -114,8 +119,10 @@ export default function Post({ post }: PostProps): JSX.Element {
               </div>
             ))}
           </div>
+          <Comments />
+
+          {preview && <PreviewButton />}
         </article>
-        <Comments />
       </main>
     </>
   );
@@ -138,9 +145,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params;
+  const { preview = false, previewData } = context;
 
   const prismic = getPrismicClient();
-  const response = await prismic.getByUID('posts', String(slug), {});
+  const response = await prismic.getByUID('posts', String(slug), {
+    ref: previewData?.ref ?? null,
+  });
 
   const post: Post = {
     uid: response.uid,
@@ -151,12 +161,12 @@ export const getStaticProps: GetStaticProps = async context => {
       author: response.data.author,
       content: response.data.content,
       banner: {
-        url: response.data.banner.url,
+        url: response.data?.banner?.url || null,
       },
     },
   };
 
   return {
-    props: { post },
+    props: { post, preview },
   };
 };
