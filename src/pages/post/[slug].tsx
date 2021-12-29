@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 import { RichText, RichTextBlock } from 'prismic-reactjs';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
 
+import Head from 'next/head';
 import Header from '../../components/Header';
 
 import { getPrismicClient } from '../../services/prismic';
-
 import styles from './post.module.scss';
 
 interface Post {
-  uid?: string;
+  uid: string;
   first_publication_date: string | null;
   data: {
     title: string;
@@ -61,6 +61,11 @@ export default function Post({ post }: PostProps): JSX.Element {
 
   return (
     <>
+      <Head>
+        <title>{post.data.title}</title>
+        <meta name="description" content={post.data.subtitle} />
+      </Head>
+
       <Header />
       <main>
         <section className={styles.postImageContainer}>

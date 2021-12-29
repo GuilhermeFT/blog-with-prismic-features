@@ -2,6 +2,7 @@ import ApiSearchResponse from '@prismicio/client/types/ApiSearchResponse';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -52,6 +53,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 
   return (
     <>
+      <Head>
+        <title>spacetraveling.</title>
+      </Head>
       <main className={commonStyles.mainContainer}>
         <Header />
         <div className={styles.mainContainer}>
@@ -104,7 +108,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const postsResponse = await prismic.query('', {
     fetch: ['posts.title', 'posts.subtitle', 'posts.uid', 'posts.author'],
     page: 1,
-    pageSize: 1,
+    pageSize: 2,
   });
 
   const postsPagination: PostPagination = {
